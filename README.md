@@ -31,6 +31,6 @@ npx expo run:android
 ## License
 
 - Code: [MIT](LICENSE).
-- Czech learning content, once added: all rights reserved.
-- Third-party data keeps its own license, with a license file next to each dataset.
+- Learning content in `content/`: [CC BY-SA 4.0](content/LICENSE).
+- Third-party data keeps its own license, with a license file next to each dataset. The HSK word list comes from [HearMandarin](https://github.com/wzperson/hearmandarin-hsk-3-0-word-list) (CC BY 4.0).
 - The app name and logo are not licensed.
