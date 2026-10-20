@@ -1,4 +1,4 @@
-// Pure helpers for importing the HSK word list. No file I/O, so they can be unit-tested.
+// Pure helpers for the HSK content scripts. No file I/O, so they can be unit-tested.
 
 export type WordRecord = {
   id: string;
@@ -9,8 +9,21 @@ export type WordRecord = {
   seq: number; // entry number in the official syllabus (global, so HSK 2 starts at 301)
   syllabus_version: '2025-11';
   gloss_cs: string | null;
-  review_status: 'draft';
+  review_status: ReviewStatus;
 };
+
+export type CharacterRecord = {
+  id: string;
+  hanzi: string;
+  level: number;
+  note_cs: string | null; // radical/component note in Czech
+  review_status: ReviewStatus;
+};
+
+export type ReviewStatus = 'draft' | 'reviewed';
+
+// The official HSK 1 character list is the characters of the HSK 1 words minus these, which it teaches later.
+export const HSK1_LATER_CHARS = ['店', '饺'];
 
 // Splits one CSV line, keeping commas inside "quoted" fields ("" is an escaped quote).
 export function parseCsvLine(line: string): string[] {
@@ -67,4 +80,14 @@ export function buildRecords(rows: Record<string, string>[], level: number): Wor
         review_status: 'draft',
       };
     });
+}
+
+// shortcut: HSK 1 only; HSK 2 needs its own exceptions and must skip characters already in HSK 1
+export function hsk1Characters(words: WordRecord[]): string[] {
+  const chars = new Set(words.filter((w) => w.level === 1).flatMap((w) => [...w.hanzi]));
+  return [...chars].filter((c) => !HSK1_LATER_CHARS.includes(c));
+}
+
+export function buildCharacters(words: WordRecord[]): CharacterRecord[] {
+  return hsk1Characters(words).map((hanzi) => ({ id: `c:${hanzi}`, hanzi, level: 1, note_cs: null, review_status: 'draft' }));
 }

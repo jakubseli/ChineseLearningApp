@@ -34,7 +34,10 @@
     "ts-fsrs": "^5.4.2"
   },
   "devDependencies": {
+    "@types/node": "~22.20.0",
     "@types/react": "~19.3.0",
+    "eslint": "^9.0.0",
+    "eslint-config-expo": "~58.0.4",
     "typescript": "~6.0.3"
   },
   "scripts": {
@@ -44,6 +47,7 @@
     "web": "expo start --web",
     "lint": "expo lint",
     "content:import": "node content/scripts/import-hsk.ts",
+    "content:validate": "node content/scripts/validate-content.ts",
     "test:content": "node --test content/scripts/*.test.ts"
   },
   "private": true
