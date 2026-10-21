@@ -22,5 +22,11 @@ raw/unihan/Unihan_hsk.txt, raw/unihan/CJKRadicals.txt
   Licensed under the Unicode License v3 (see raw/unihan/LICENSE).
   The radical field in source/characters.jsonl was prefilled from it.
 
+../assets/fonts/noto_sans_sc.otf
+  A subset of Noto Sans SC Regular 2.004 (Noto CJK), © 2014-2021 Adobe,
+  https://github.com/notofonts/noto-cjk
+  Licensed under the SIL Open Font License 1.1 (see raw/noto-sans-sc/LICENSE).
+  Made by scripts/build-font.ts from the full font, which is not in git.
+
 The scripts in scripts/ are code and are covered by the repository's MIT
 license (../LICENSE).

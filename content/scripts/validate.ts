@@ -7,7 +7,8 @@ const STATUSES = ['draft', 'reviewed'];
 const text = (v: unknown) => typeof v === 'string' && v !== '';
 const textOrNull = (v: unknown) => v === null || typeof v === 'string';
 
-export function validate(words: WordRecord[], chars: CharacterRecord[], hasStrokes: (hanzi: string) => boolean): string[] {
+// fontChars: the characters in the bundled font subset (assets/fonts/noto_sans_sc_chars.txt).
+export function validate(words: WordRecord[], chars: CharacterRecord[], hasStrokes: (hanzi: string) => boolean, fontChars: Set<string>): string[] {
   const errors: string[] = [];
   const ids = new Set<string>();
   const check = (ok: boolean, message: string) => ok || errors.push(message);
@@ -48,7 +49,10 @@ export function validate(words: WordRecord[], chars: CharacterRecord[], hasStrok
   for (const h of expected) check(actual.has(h), `character ${h}: in the HSK 1 words but missing from characters.jsonl`);
   for (const h of actual) check(expected.has(h), `character ${h}: not on the HSK 1 character list`);
 
-  for (const h of new Set([...words.flatMap((w) => [...w.hanzi]), ...actual])) check(hasStrokes(h), `character ${h}: no stroke data`);
+  for (const h of new Set([...words.flatMap((w) => [...w.hanzi]), ...actual])) {
+    check(hasStrokes(h), `character ${h}: no stroke data`);
+    check(fontChars.has(h), `character ${h}: not in the font subset, run npm run content:font`);
+  }
 
   return errors;
 }

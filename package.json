@@ -51,6 +51,7 @@
     "content:import": "node content/scripts/import-hsk.ts",
     "content:validate": "node content/scripts/validate-content.ts",
     "content:build": "npm run content:validate && node --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON content/scripts/build-content.ts",
+    "content:font": "node content/scripts/build-font.ts",
     "test:content": "node --test content/scripts/*.test.ts"
   },
   "private": true
