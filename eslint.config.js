@@ -5,6 +5,7 @@ const expoConfig = require('eslint-config-expo/flat');
 module.exports = defineConfig([
   expoConfig,
   {
-    ignores: ['dist/*'],
+    // src/spike: local throwaway code from milestone 1, not in git
+    ignores: ['dist/*', 'src/spike/*'],
   },
 ]);
