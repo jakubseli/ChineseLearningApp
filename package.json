@@ -4,6 +4,7 @@
   "main": "expo-router/entry",
   "dependencies": {
     "@expo/ui": "~58.0.20",
+    "drizzle-orm": "^0.45.4",
     "expo": "~58.0.14",
     "expo-audio": "~58.0.9",
     "expo-constants": "~58.0.12",
@@ -36,6 +37,7 @@
   "devDependencies": {
     "@types/node": "~22.20.0",
     "@types/react": "~19.3.0",
+    "drizzle-kit": "^0.31.11",
     "eslint": "^9.0.0",
     "eslint-config-expo": "~58.0.4",
     "typescript": "~6.0.3"
@@ -48,6 +50,7 @@
     "lint": "expo lint",
     "content:import": "node content/scripts/import-hsk.ts",
     "content:validate": "node content/scripts/validate-content.ts",
+    "content:build": "npm run content:validate && node --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON content/scripts/build-content.ts",
     "test:content": "node --test content/scripts/*.test.ts"
   },
   "private": true
