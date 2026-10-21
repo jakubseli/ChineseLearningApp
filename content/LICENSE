@@ -16,5 +16,11 @@ raw/wzperson/hsk-3-0-words.csv
   source/words.jsonl is adapted from it (words, levels, pinyin, part of
   speech, syllabus order).
 
+raw/unihan/Unihan_hsk.txt, raw/unihan/CJKRadicals.txt
+  From the Unicode Character Database (Unihan 18.0.0), Unicode, Inc.,
+  https://www.unicode.org/Public/UCD/latest/ucd/
+  Licensed under the Unicode License v3 (see raw/unihan/LICENSE).
+  The radical field in source/characters.jsonl was prefilled from it.
+
 The scripts in scripts/ are code and are covered by the repository's MIT
 license (../LICENSE).

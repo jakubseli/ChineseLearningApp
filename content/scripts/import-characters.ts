@@ -2,6 +2,7 @@
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 
 import { buildCharacters } from './hsk.ts';
+import { unihanRadicals } from './unihan.ts';
 
 const out = 'content/source/characters.jsonl';
 
@@ -11,7 +12,8 @@ if (existsSync(out)) {
 }
 
 const words = readFileSync('content/source/words.jsonl', 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l));
-const records = buildCharacters(words);
+const radicals = unihanRadicals(readFileSync('content/raw/unihan/Unihan_hsk.txt', 'utf8'), readFileSync('content/raw/unihan/CJKRadicals.txt', 'utf8'));
+const records = buildCharacters(words, radicals);
 
 writeFileSync(out, records.map((r) => JSON.stringify(r)).join('\n') + '\n');
 console.log(`${records.length} HSK 1 characters -> ${out}`);

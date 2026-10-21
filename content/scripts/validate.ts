@@ -35,6 +35,7 @@ export function validate(words: WordRecord[], chars: CharacterRecord[], hasStrok
     ids.add(c.id);
     check(text(c.hanzi) && [...c.hanzi].length === 1 && c.id === `c:${c.hanzi}`, `${at}: id must be c:<one hanzi>`);
     check(c.level === 1, `${at}: level must be 1`);
+    check(text(c.radical) && [...c.radical].length === 1, `${at}: radical must be one character`);
     check(textOrNull(c.note_cs), `${at}: note_cs must be text or null`);
     check(STATUSES.includes(c.review_status), `${at}: review_status must be draft or reviewed`);
   }

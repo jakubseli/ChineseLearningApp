@@ -16,6 +16,7 @@ export type CharacterRecord = {
   id: string;
   hanzi: string;
   level: number;
+  radical: string; // as mainland dictionaries list it (亻 for 你, 辶 for 这, 人 for 个); prefilled from Unihan, set by hand
   note_cs: string | null; // radical/component note in Czech
   review_status: ReviewStatus;
 };
@@ -88,6 +89,11 @@ export function hsk1Characters(words: WordRecord[]): string[] {
   return [...chars].filter((c) => !HSK1_LATER_CHARS.includes(c));
 }
 
-export function buildCharacters(words: WordRecord[]): CharacterRecord[] {
-  return hsk1Characters(words).map((hanzi) => ({ id: `c:${hanzi}`, hanzi, level: 1, note_cs: null, review_status: 'draft' }));
+// radicals: Unihan's radical per character (see unihan.ts)
+export function buildCharacters(words: WordRecord[], radicals: Map<string, string>): CharacterRecord[] {
+  return hsk1Characters(words).map((hanzi) => {
+    const radical = radicals.get(hanzi);
+    if (!radical) throw new Error(`character ${hanzi}: no radical in Unihan`);
+    return { id: `c:${hanzi}`, hanzi, level: 1, radical, note_cs: null, review_status: 'draft' };
+  });
 }
