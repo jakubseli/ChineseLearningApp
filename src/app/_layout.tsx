@@ -12,7 +12,9 @@ export default function RootLayout() {
   if (!success) return null;
   return (
     <SQLiteProvider databaseName={contentDbName} assetSource={{ assetId: contentAsset }} onInit={dropOldContentDb}>
-      <Stack />
+      <Stack>
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      </Stack>
     </SQLiteProvider>
   );
 }
