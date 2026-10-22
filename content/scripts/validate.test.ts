@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 
-import { buildCharacters, type CharacterRecord, type WordRecord } from './hsk.ts';
+import { type CharacterRecord, hsk1Characters, type WordRecord } from './hsk.ts';
 import { validate } from './validate.ts';
 
 const word = (hanzi: string, seq: number): WordRecord => ({
@@ -15,9 +15,8 @@ const word = (hanzi: string, seq: number): WordRecord => ({
   gloss_cs: null,
   review_status: 'draft',
 });
-// 300 words, like HSK 1; 饭店 brings in 店, which is not an HSK 1 character
 const words = [word('饭店', 1), ...Array.from({ length: 299 }, (_, i) => word(String.fromCodePoint(0x4e00 + i), i + 2))];
-const chars = buildCharacters(words, new Map(words.flatMap((w) => [...w.hanzi]).map((h) => [h, '一'])));
+const chars: CharacterRecord[] = hsk1Characters(words).map((hanzi) => ({ id: `c:${hanzi}`, hanzi, level: 1, radical: '一', note_cs: null, review_status: 'draft' }));
 const allStrokes = () => true;
 const font = new Set(words.flatMap((w) => [...w.hanzi]));
 
@@ -25,14 +24,10 @@ test('valid content has no problems', () => {
   assert.deepEqual(validate(words, chars, allStrokes, font), []);
 });
 
-test('buildCharacters drops characters taught after HSK 1', () => {
+test('hsk1Characters drops characters taught after HSK 1', () => {
   assert.equal(chars.length, 300);
   assert.ok(chars.some((c) => c.hanzi === '饭'));
   assert.ok(!chars.some((c) => c.hanzi === '店'));
-});
-
-test('buildCharacters fails on a character without a radical', () => {
-  assert.throws(() => buildCharacters(words, new Map()), /character 饭: no radical in Unihan/);
 });
 
 test('reports bad word records', () => {

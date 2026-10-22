@@ -35,7 +35,14 @@
         }
       ],
       "expo-sqlite",
-      "expo-audio"
+      "expo-audio",
+      "expo-asset",
+      [
+        "expo-font",
+        {
+          "fonts": ["./assets/fonts/noto_sans_sc.otf"]
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true,

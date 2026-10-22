@@ -16,7 +16,6 @@ test('studyDayEnd is the next 4:00', () => {
   assert.deepEqual(studyDayEnd(new Date(2026, 9, 31, 22, 0)), new Date(2026, 10, 1, 4, 0));
 });
 
-// n consecutive days from 2026-10-01, each with the given number of answers
 const days = (...counts: number[]) => new Map(counts.map((n, i) => [`2026-10-${String(i + 1).padStart(2, '0')}`, n]));
 
 test('no answers, no streak', () => {
@@ -30,7 +29,6 @@ test('today does not break the streak before it ends, and counts once the goal i
 
 test('a missed day without a freeze resets the streak', () => {
   assert.equal(streak(days(20, 20, 3, 20), 20, '2026-10-05').days, 1);
-  // a day with no answers at all is missed too
   assert.equal(streak(new Map([['2026-10-01', 20], ['2026-10-03', 20]]), 20, '2026-10-04').days, 1);
 });
 

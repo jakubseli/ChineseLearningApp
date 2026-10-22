@@ -1,4 +1,3 @@
-// Pure content checks. Returns every problem found, so one run shows all of them.
 import { type CharacterRecord, hsk1Characters, type WordRecord } from './hsk.ts';
 
 const HSK1_WORD_COUNT = 300;
@@ -7,13 +6,11 @@ const STATUSES = ['draft', 'reviewed'];
 const text = (v: unknown) => typeof v === 'string' && v !== '';
 const textOrNull = (v: unknown) => v === null || typeof v === 'string';
 
-// fontChars: the characters in the bundled font subset (assets/fonts/noto_sans_sc_chars.txt).
 export function validate(words: WordRecord[], chars: CharacterRecord[], hasStrokes: (hanzi: string) => boolean, fontChars: Set<string>): string[] {
   const errors: string[] = [];
   const ids = new Set<string>();
   const check = (ok: boolean, message: string) => ok || errors.push(message);
 
-  // shortcut: HSK 1 only (level and count); extend when HSK 2 words are imported
   for (const w of words) {
     const at = `word ${w.id ?? JSON.stringify(w)}`;
     check(!ids.has(w.id), `${at}: duplicate id`);
@@ -41,7 +38,6 @@ export function validate(words: WordRecord[], chars: CharacterRecord[], hasStrok
     check(STATUSES.includes(c.review_status), `${at}: review_status must be draft or reviewed`);
   }
 
-  // The checks below read hanzi from every record, so they need the shapes above to be right.
   if (errors.length) return errors;
 
   const expected = new Set(hsk1Characters(words));

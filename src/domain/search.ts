@@ -1,5 +1,3 @@
-// Word search that ignores tone marks, Czech diacritics, case, spaces and apostrophes:
-// "xuesheng" finds xuéshēng and "skola" finds škola. v stands for ü, as on pinyin keyboards.
 const BASE = new Map(
   ['aāáǎà', 'eēéěè', 'iīíǐì', 'oōóǒò', 'uūúǔùǖǘǚǜüů', 'cč', 'dď', 'nňń', 'rř', 'sš', 'tť', 'yý', 'zž'].flatMap(([base, ...marked]) =>
     marked.map((m) => [m, base] as const),

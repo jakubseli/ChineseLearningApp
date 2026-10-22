@@ -1,12 +1,8 @@
-// Czech wording for the UI.
-
-// 1 slovíčko, 2–4 slovíčka, 0 and 5+ slovíček.
 export function plural(n: number, [one, few, many]: [string, string, string]): string {
   if (n === 1) return one;
   return n >= 2 && n <= 4 ? few : many;
 }
 
-// Every part-of-speech code used in the HSK 3.0 syllabus.
 const POS: Record<string, string> = {
   名: 'podstatné jméno',
   动: 'sloveso',
@@ -25,8 +21,6 @@ const POS: Record<string, string> = {
   后缀: 'přípona',
 };
 
-// Official notation like "形、介、（动、量）": main uses first, bracketed ones are less common.
-// null is a set phrase (你好, 没关系).
 export function posLabel(pos: string | null): string {
   if (pos === null) return 'ustálené spojení';
   const label = (codes: string[]) =>

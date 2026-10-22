@@ -1,24 +1,11 @@
-// Validates the hand-edited content files and exits with an error if anything is wrong.
 import { existsSync, readFileSync } from 'node:fs';
 
+import { readJsonl } from './jsonl.ts';
 import { validate } from './validate.ts';
 
-// Hand-edited files, so report bad JSON with its line number.
-const jsonl = (path: string) =>
-  readFileSync(path, 'utf8')
-    .split('\n')
-    .flatMap((line, i) => {
-      if (!line.trim()) return [];
-      try {
-        return [JSON.parse(line)];
-      } catch (e) {
-        throw new Error(`${path}:${i + 1}: ${(e as Error).message}`);
-      }
-    });
-
 const errors = validate(
-  jsonl('content/source/words.jsonl'),
-  jsonl('content/source/characters.jsonl'),
+  readJsonl('content/source/words.jsonl'),
+  readJsonl('content/source/characters.jsonl'),
   (hanzi) => existsSync(`node_modules/hanzi-writer-data/${hanzi}.json`),
   new Set(readFileSync('assets/fonts/noto_sans_sc_chars.txt', 'utf8')),
 );

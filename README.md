@@ -25,8 +25,11 @@ Needs Node 22.11+, JDK 17 or 21, and Android Studio with the Android SDK. With a
 
 ```bash
 npm install
+npm run content:build
 npx expo run:android
 ```
+
+`npm run content:build` makes the content database the app loads. Run it again after changing anything in `content/`.
 
 ## License
 

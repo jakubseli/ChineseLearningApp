@@ -11,7 +11,6 @@ const today = '2026-10-21';
 const order = ['w:一:1', 'w:二:1', 'w:三:1'];
 const fresh = (itemId: string) => introduce(itemId, false, today, now).map((m) => m.card);
 
-// A card in long-term review, due at `due`, last answered on an earlier day.
 const review = (itemId: string, kind: 'rec' | 'prod', due: Date): StudyCard => ({
   id: `${itemId}#${kind}`,
   itemId,
@@ -31,7 +30,7 @@ test('a just introduced word is asked right away, rec card first', () => {
 
 test('after an answer, the word’s other card waits for tomorrow', () => {
   const [rec, prod] = fresh('w:一:1');
-  const answered = answer(rec, 'good', now).card; // learning step, back in ~10 min
+  const answered = answer(rec, 'good', now).card;
   assert.deepEqual(
     dueCards([answered, prod], now).map((c) => c.id),
     ['w:一:1#rec'],
@@ -66,7 +65,7 @@ test('of two due cards of one word, only the earlier one is shown', () => {
 });
 
 test('with nothing else left, a learning card due within 20 minutes comes early, later ones end the session', () => {
-  const soon = answer(fresh('w:一:1')[0], 'good', new Date(+now - 60_000)).card; // due in ~9 min
+  const soon = answer(fresh('w:一:1')[0], 'good', new Date(+now - 60_000)).card;
   const input = { cards: [soon], order, newPerDay: 1 };
   assert.equal((nextCard(input, now) as { card: StudyCard }).card.id, 'w:一:1#rec');
   assert.equal(nextCard(input, new Date(+now - 30 * 60_000)), null);
